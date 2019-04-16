@@ -40,6 +40,8 @@ within_scale<-function(data,vars=NULL, scale_w=TRUE, center_w=TRUE, within = NUL
   
   scale_return<-do.call("rbind", scaled_out)
   
+  scale_return<-scale_return[ , !colnames(scale_return) %in% within]
+  
   colnames(scale_return) <- paste("scaled_within",colnames(scale_return),sep="_")
   
   if (combine == TRUE){
