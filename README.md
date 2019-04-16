@@ -10,6 +10,9 @@ autoReg: calculates autocorrelation for an item at a given lag
 
 btwn_win: for a given covariate, prepares it to be evaluated for both between-subject and within-subject effects (e.g., Hedeker & Gibbons, 2006) in a model with time-varying covariates
 
+missing_within: returns a nsub x ncol dataframe with each cell representing the proportion of a given variable missing for a specific subject
+
 scale_within: by subject centering/standardization
 
 var_check: For each subject, creates a list of variables that have no variability (sensor stuck and outputting same value, or subject responds the exact same every day)
+
