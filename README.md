@@ -8,7 +8,7 @@ A variety of functions to aid in the analysis of intensively collected longitudi
 
 autoReg: calculates autocorrelation for an item at a given lag
 
-btwn_win: for a given covariate, prepares the it to be evaluated for both between-subject and within-subject effects (e.g., Hedeker & Gibbons, 2006) in a model with time-varying covariates
+btwn_win: for a given covariate, prepares it to be evaluated for both between-subject and within-subject effects (e.g., Hedeker & Gibbons, 2006) in a model with time-varying covariates
 
 scale_within: by subject centering/standardization
 
