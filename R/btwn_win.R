@@ -1,4 +1,4 @@
-btwn_win<-function(data, within, center_w=TRUE, scale_w = FALSE, combine = TRUE){
+btwn_win<-function(data, within = NULL, center_w=TRUE, scale_w = FALSE, combine = TRUE){
   
   data_centered<-within_scale(data,center_w = center_w, scale_w = scale_w, within = within)
   
