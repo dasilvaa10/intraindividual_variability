@@ -6,20 +6,26 @@ missing_within<-function(data,within = NULL){
   
   missing<-list()
   
+  cont_missing<-list()
+  
   for (i in 1:length(split_data)){
     
     tot_miss<-apply(split_data[[i]][,-within_ind], 2 , function(x) sum(is.na(x)))
     
     missing[[i]]<-c(unique(split_data[[i]][,within]),tot_miss/nrow(split_data[[i]]))
     
+    cont_missing[[i]]<-continuous_missing(split_data[[i]])
+    
   }
   
   missing_within<-do.call("rbind", missing)
+  
+  missing_cont<-do.call("rbind", cont_missing)
   
   missing_within<-as.data.frame(missing_within)
   
   missing_within[,-1]<-apply(missing_within[,-1], 2, function(x) as.numeric(as.character(x)))
   
-  return(missing_within)
+  return(list(missing_within,missing_cont))
   
 }
