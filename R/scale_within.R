@@ -1,4 +1,4 @@
-within_scale<-function(data,vars=NULL, scale_w=TRUE, center_w=TRUE, within = NULL,combine=TRUE){
+scale_within<-function(data,vars=NULL, scale_w=TRUE, center_w=TRUE, within = NULL,combine=TRUE, means = FALSE){
   
   if (is.null(within) == TRUE | within %in% colnames(data) == FALSE){
     
@@ -30,13 +30,35 @@ within_scale<-function(data,vars=NULL, scale_w=TRUE, center_w=TRUE, within = NUL
   
   scaled_out<-list()
   
+  means_out<-list()
+  
   for (i in 1:length(split_data)){
+    
+    means_out_sub<-list()
+    
+    col_means<-colMeans(split_data[[i]][,-within_ind], na.rm=TRUE)
+    
+    for (j in 1:length(col_means)){
+      
+      means_out_sub[[j]]<-as.numeric(rep(col_means[j],nrow(split_data[[i]])))
+      
+    }
+    
+    temp_means<-do.call("cbind",means_out_sub)
+    
+    colnames(temp_means)<-names(col_means)
+    
+    colnames(temp_means) <- paste("btwn",colnames(temp_means),sep="_")
+    
+    means_out[[i]]<-temp_means
     
     split_data[[i]][,-within_ind] <-scale(split_data[[i]][,-within_ind], center = center_w, scale = scale_w)
     
     scaled_out[[i]]<- split_data[[i]]
     
   }
+  
+  means_return<-do.call("rbind", means_out )
   
   scale_return<-do.call("rbind", scaled_out)
   
@@ -51,6 +73,14 @@ within_scale<-function(data,vars=NULL, scale_w=TRUE, center_w=TRUE, within = NUL
   } else {
     
     scale_return <- scale_return
+    
+  }
+  
+  if (means == TRUE){
+    
+    scale_return<-list(scale_return, means_return)
+    
+    names(scale_return) <-c("data","btwnSub_effects")
     
   }
   
