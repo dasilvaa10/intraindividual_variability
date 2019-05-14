@@ -1,27 +1,25 @@
 btwn_win<-function(data, within = NULL, center_w=TRUE, scale_w = FALSE, combine = TRUE){
   
-  data_centered<-within_scale(data,center_w = center_w, scale_w = scale_w, within = within)
+  data_centered<-scale_within(data,center_w = center_w, scale_w = scale_w, within = within, means =TRUE)
   
-  ind_var<-colnames(data)[!colnames(data) %in% within]
+  within_inds<-grep("within", colnames(data_centered[[1]]))
   
-  btwn_label<-paste("btwn",ind_var,sep="_")
+  within_dat<-data_centered[[1]][,within_inds]
   
-  data_centered$temp<-mean(data[[ind_var]],na.rm=TRUE)
+  btwn_dat<-data_centered[[2]]
   
-  colnames(data_centered)[grep("temp", colnames(data_centered))]<-btwn_label
-  
-  data_centered<-data_centered[,!colnames(data_centered) %in% colnames(data)]
+  combined_dat<-cbind(within_dat,btwn_dat)
   
   if (combine == TRUE) {
     
-    data_centered<-cbind(data,data_centered)
+    combined_dat<-cbind(data,combined_dat)
     
   } else {
   
-    data_centered <- data_centered
+    combined_dat <- combined_dat
     
   } 
   
-  return(data_centered)
+  return(combined_dat)
   
 }
