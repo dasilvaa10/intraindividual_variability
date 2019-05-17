@@ -1,5 +1,13 @@
 autoReg<-function(vector, lag=1){
   
+  prop_miss<-sum(is.na(vector))/length(vector)
+  
+  if (prop_miss!=0){
+    
+    warning(prop_miss, "% of your data is missing, lag will not truly be as specified")
+    
+  }
+  
   lp1<-lag+1
   
   s1<-vector[lp1:length(vector)]
