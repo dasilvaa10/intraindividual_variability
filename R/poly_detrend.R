@@ -10,7 +10,6 @@ poly_detrend<-function(dat, vars = NULL, poly = NULL, time  = NULL){
     
   }
   
-  
   if (is.null(vars) == TRUE){
     
     stop("Please specify variable(s) to detrend!")
@@ -102,6 +101,8 @@ poly_detrend<-function(dat, vars = NULL, poly = NULL, time  = NULL){
   resids_df<-do.call("cbind", resids_out)
   
   coefs_df<-do.call("rbind", linear_coefs)
+  
+  row.names(coefs_df)<-vars
   
   colnames(resids_df)<-paste(vars, "_resids", sep = "")
   
